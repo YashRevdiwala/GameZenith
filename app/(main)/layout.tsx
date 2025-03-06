@@ -5,7 +5,7 @@ import AppSidebar from "./_components/sidebar"
 const BrowseLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <SidebarProvider>
+      <SidebarProvider defaultOpen={false}>
         <Navbar />
         <div className="flex h-full pt-20">
           <AppSidebar />
