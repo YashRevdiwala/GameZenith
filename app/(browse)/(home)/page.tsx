@@ -1,14 +1,6 @@
-import { auth } from "@clerk/nextjs/server"
-
 import VideoCard from "./_components/video-card"
 
 export default async function Home() {
-  const { userId } = await auth()
-
-  if (!userId) {
-    return <div>Sign in to view this page</div>
-  }
-
   const videos = [
     {
       title: "How to use Tailwind CSS",
@@ -38,7 +30,7 @@ export default async function Home() {
   ]
 
   return (
-    <div className="flex items-center justify-center p-3">
+    <div className="flex flex-wrap p-5">
       {videos
         .sort((a, b) => Number(b.live) - Number(a.live))
         .map((video, i) => (
