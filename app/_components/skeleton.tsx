@@ -25,7 +25,7 @@ export function SkeletonCard({ height = 470, width = 400 }: SkeletonCardProps) {
       }}
       className="flex flex-col space-y-3"
     >
-      <Skeleton className="h-full w-full rounded-xl" />
+      <Skeleton className="h-full w-full rounded-xl bg-gray-400" />
     </div>
   )
 }

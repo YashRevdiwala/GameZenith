@@ -30,11 +30,11 @@ export default async function Home() {
   ]
 
   return (
-    <div className="flex flex-wrap p-5">
+    <div className="mx-auto flex flex-wrap space-x-4 px-5 py-3">
       {videos
         .sort((a, b) => Number(b.live) - Number(a.live))
         .map((video, i) => (
-          <div key={i} className="p-3">
+          <div key={i} className="py-3">
             <VideoCard videoDetails={video} />
           </div>
         ))}

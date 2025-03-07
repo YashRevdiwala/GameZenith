@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { PlayCircle } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
 
 interface VideoCardProps {
   /**
@@ -32,14 +33,17 @@ const VideoCard = ({ videoDetails }: VideoCardProps) => {
         <PlayCircle size={50} className="absolute text-white" />
 
         {videoDetails.live && (
-          <p className="absolute bottom-2 left-2 rounded bg-rose-600 p-1 font-semibold text-white">
+          <Badge
+            className="absolute bottom-2 left-2 p-2 font-semibold"
+            variant="destructive"
+          >
             LIVE
-          </p>
+          </Badge>
         )}
       </div>
       <div className="flex w-full flex-col items-start justify-center rounded-b-lg bg-gray-500 p-5">
         <h1>
-          {videoDetails.live && "🔴 Live: "}
+          {videoDetails.live && "🔴Live : "}
           {videoDetails.title}
         </h1>
         <p className="text-xs">{videoDetails.creator}</p>

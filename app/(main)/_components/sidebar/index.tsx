@@ -1,66 +1,38 @@
-import Link from "next/link"
-import { Home } from "lucide-react"
+import React from "react"
 
-import { getRecommended } from "@/lib/recommended-service"
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import RecommendedUsers from "./recommended_users"
+import { getFollowedUsers } from "@/lib/follow-service"
+import { getRecommended } from "@/lib/recommended-service"
+import Following from "./following"
+import RecommendedUsers from "./recommended-users"
+import { UsersSkeleton } from "./users-skeleton"
 
 const AppSidebar = async () => {
-  const users = await getRecommended()
+  const recommended = await getRecommended()
+  const follows = await getFollowedUsers()
 
   return (
     <Sidebar collapsible="icon" className="border-r border-[#252730]">
-      <SidebarContent className="text-muted bg-[#252730] py-20 font-semibold">
+      <SidebarContent className="text-muted bg-[#252730] font-semibold md:py-20">
         <SidebarGroup>
           <SidebarMenuItem className="flex items-end justify-end">
             <SidebarMenuButton className="w-fit" asChild>
-              <SidebarTrigger className="cursor-pointer" />
+              <SidebarTrigger className="hidden cursor-pointer md:block" />
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarGroup>
 
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link href="/">
-                    <Home />
-                    <span>Home</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <SidebarGroup>
-          <SidebarGroupLabel className="text-muted-foreground font-bold">
-            Recommended
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {users.map((user, i: number) => (
-                <RecommendedUsers
-                  key={i}
-                  username={user.username}
-                  imageUrl={user.imageUrl}
-                  isLive={true}
-                />
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        <React.Suspense fallback={<UsersSkeleton />}>
+          <Following data={follows} />
+          <RecommendedUsers users={recommended} />
+        </React.Suspense>
       </SidebarContent>
     </Sidebar>
   )

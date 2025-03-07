@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.12.2",
+    "@clerk/themes": "^2.2.20",
     "@livekit/components-react": "^2.8.1",
     "@livekit/components-styles": "^1.1.4",
     "@prisma/client": "^6.4.1",
@@ -28,8 +29,10 @@
     "livekit-server-sdk": "^2.10.2",
     "lucide-react": "^0.477.0",
     "next": "15.2.0",
+    "next-themes": "^0.4.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "sonner": "^2.0.1",
     "svix": "^1.61.2",
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
