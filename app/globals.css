@@ -9,6 +9,24 @@
   --font-mono: var(--font-geist-mono);
 }
 
+.chat-settings-container {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
+}
+
+.chat-settings-container.show {
+  opacity: 1;
+  max-height: 200px; /* Adjust based on content */
+}
+
+.chat-settings-container.hide {
+  opacity: 0;
+  max-height: 0;
+}
+
+
 html, body, :root{
   height: 100%;
 }

@@ -30,10 +30,7 @@ const Actions = async () => {
             className="text-muted-foreground hover:text-primary"
             asChild
           >
-            <Link
-              className="cursor-pointer"
-              href={`/dashboard/u/${user?.username}`}
-            >
+            <Link className="cursor-pointer" href={`/u/${user?.username}`}>
               <Clapperboard className="h-5 w-5 lg:mr-2" />
               <span className="hidden lg:block">Dashboard</span>
             </Link>

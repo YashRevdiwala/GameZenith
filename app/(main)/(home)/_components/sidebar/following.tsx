@@ -80,6 +80,7 @@ const Following = ({ data }: FollowingProps) => {
                   <TooltipContent
                     side="right"
                     className={cn(
+                      "hidden md:block",
                       open
                         ? "hidden"
                         : "text-muted w-fit rounded-lg px-5 text-lg font-semibold shadow-lg"

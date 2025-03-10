@@ -1,10 +1,9 @@
 "use client"
 import Link from "next/link"
-import Image from "next/image"
-import { Users } from "@prisma/client"
+import { useUser } from "@clerk/nextjs"
+import { Fullscreen, KeyRound, MessageSquare, Users } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
 import {
   useSidebar,
   SidebarMenu,
@@ -21,71 +20,71 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-interface RecommendedUsersProps {
-  users: Users[]
+interface Routes {
+  label: string
+  href: string
+  icon: React.ReactNode
 }
 
-const RecommendedUsers = ({ users }: RecommendedUsersProps) => {
-  const isLive = true
+const SidebarRoutes = () => {
+  const { user } = useUser()
   const { open } = useSidebar()
 
-  if (!users.length) return
+  const routes: Routes[] = [
+    {
+      label: "Stream",
+      href: `/u/${user?.username}`,
+      icon: <Fullscreen />,
+    },
+    {
+      label: "Keys",
+      href: `/u/${user?.username}/keys`,
+      icon: <KeyRound />,
+    },
+    {
+      label: "Chat",
+      href: `/u/${user?.username}/chat`,
+      icon: <MessageSquare />,
+    },
+    {
+      label: "Community",
+      href: `/u/${user?.username}/community`,
+      icon: <Users />,
+    },
+  ]
 
   return (
     <TooltipProvider>
       <SidebarGroup>
         <SidebarGroupLabel className="text-muted-foreground font-bold">
-          Recommended For You
+          Dashboard Settings
         </SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu>
-            {users.map((user, i: number) => (
+            {routes.map((route, i: number) => (
               <SidebarMenuItem className={cn(!open && "w-full")} key={i}>
                 <Tooltip delayDuration={200}>
                   <TooltipTrigger className="w-full">
                     <SidebarMenuButton asChild>
                       <Link
-                        href={`/${user.username}`}
+                        href={`${route.href}`}
                         className="flex items-center space-x-2"
                       >
-                        <Image
-                          className={cn(
-                            isLive &&
-                              "ring-opacity-50 ring-2 ring-rose-500 ring-offset-2 ring-offset-[#25272f]",
-                            "w-5 rounded-full"
-                          )}
-                          src={user.imageUrl}
-                          alt={user.username}
-                          width={1000}
-                          height={1000}
-                        />
-
-                        <span>{user.username}</span>
-
-                        {isLive && (
-                          <Badge
-                            className={cn(
-                              open
-                                ? ""
-                                : "absolute right-0 -translate-x-1/2 transform md:right-full md:-bottom-3 md:left-1/2"
-                            )}
-                            variant="destructive"
-                          >
-                            LIVE
-                          </Badge>
-                        )}
+                        {route.icon}
+                        <span>{route.label}</span>
                       </Link>
                     </SidebarMenuButton>
                   </TooltipTrigger>
                   <TooltipContent
                     side="right"
                     className={cn(
+                      "hidden md:block",
                       open
                         ? "hidden"
                         : "text-muted w-fit rounded-lg px-5 text-lg font-semibold shadow-lg"
                     )}
                   >
-                    {user.username}
+                    {route.label}
                   </TooltipContent>
                 </Tooltip>
               </SidebarMenuItem>
@@ -96,4 +95,4 @@ const RecommendedUsers = ({ users }: RecommendedUsersProps) => {
     </TooltipProvider>
   )
 }
-export default RecommendedUsers
+export default SidebarRoutes
