@@ -44,7 +44,7 @@ const Search = () => {
         type="submit"
         size="sm"
         variant="secondary"
-        className="cursor-pointer rounded-l-none border-0 bg-[#252931] transition hover:bg-transparent hover:opacity-75"
+        className="rounded-l-none border-0 bg-[#252931] transition hover:bg-transparent hover:opacity-75"
       >
         <SearchIcon className="text-muted h-5 w-5" />
       </Button>

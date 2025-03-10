@@ -39,7 +39,7 @@ export const Actions = ({ isFollowing, userId }: ActionsProps) => {
     <Button
       disabled={isPending}
       variant="ghost"
-      className="bg-muted-foreground hover:bg-muted cursor-pointer"
+      className="bg-muted-foreground hover:bg-muted"
       onClick={onClick}
     >
       {isFollowing ? (
