@@ -5,6 +5,7 @@ import { dark } from "@clerk/themes"
 
 import "./globals.css"
 import { Toaster } from "@/components/ui/sonner"
+import { ThemeProvider } from "./_components/theme-provider"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,11 +37,16 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} bg-black text-white antialiased`}
         >
-          <Toaster theme="light" position="bottom-center" />
-          {children}
+          <ThemeProvider
+            attribute="class"
+            forcedTheme="dark"
+            storageKey="gamezenith-theme"
+          >
+            <Toaster theme="light" position="bottom-center" />
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
   )
 }
-
