@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input"
-import { CopyButton } from "../copy-button"
+import { CopyButton } from "./copy-button"
 
 interface UrlCardProps {
   value?: string | null

@@ -3,7 +3,7 @@ import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
 
 import { Input } from "@/components/ui/input"
-import { CopyButton } from "../copy-button"
+import { CopyButton } from "./copy-button"
 import { Button } from "@/components/ui/button"
 
 interface KeyCardProps {

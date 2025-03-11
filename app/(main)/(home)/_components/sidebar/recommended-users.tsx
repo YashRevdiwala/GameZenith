@@ -22,11 +22,14 @@ import {
 } from "@/components/ui/tooltip"
 
 interface RecommendedUsersProps {
-  users: Users[]
+  users: (Users & {
+    stream: {
+      isLive: boolean
+    } | null
+  })[]
 }
 
 const RecommendedUsers = ({ users }: RecommendedUsersProps) => {
-  const isLive = true
   const { open } = useSidebar()
 
   if (!users.length) return
@@ -50,7 +53,7 @@ const RecommendedUsers = ({ users }: RecommendedUsersProps) => {
                       >
                         <Image
                           className={cn(
-                            isLive &&
+                            user.stream?.isLive &&
                               "ring-opacity-50 ring-2 ring-rose-500 ring-offset-2 ring-offset-[#25272f]",
                             "w-5 rounded-full"
                           )}
@@ -62,32 +65,23 @@ const RecommendedUsers = ({ users }: RecommendedUsersProps) => {
 
                         <span>{user.username}</span>
 
-                        {isLive && (
-                          <Badge
-                            className={cn(
-                              open
-                                ? ""
-                                : "absolute right-0 -translate-x-1/2 transform md:right-full md:-bottom-3 md:left-1/2"
-                            )}
-                            variant="destructive"
-                          >
-                            LIVE
-                          </Badge>
+                        {user.stream?.isLive && open && (
+                          <Badge variant="destructive">LIVE</Badge>
                         )}
                       </Link>
                     </SidebarMenuButton>
                   </TooltipTrigger>
-                  <TooltipContent
-                    side="right"
-                    className={cn(
-                      "hidden md:block",
-                      open
-                        ? "hidden"
-                        : "text-muted w-fit rounded-lg px-5 text-lg font-semibold shadow-lg"
-                    )}
-                  >
-                    {user.username}
-                  </TooltipContent>
+
+                  {!open && (
+                    <TooltipContent
+                      side="right"
+                      className={cn(
+                        "text-muted hidden w-fit rounded-lg px-5 text-lg font-semibold shadow-lg md:block"
+                      )}
+                    >
+                      {user.username}
+                    </TooltipContent>
+                  )}
                 </Tooltip>
               </SidebarMenuItem>
             ))}

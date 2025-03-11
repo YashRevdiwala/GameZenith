@@ -12,20 +12,21 @@ interface CreatorLayoutProps {
 }
 
 const CreatorLayout = async ({ params, children }: CreatorLayoutProps) => {
-  const { slug } = await params
+  const { slug } = params
 
   const self = await getSelfByUsername(slug)
-
   if (!self) redirect("/")
 
   return (
     <>
       <CreatorNavbar />
-      <div className="flex h-full w-screen pt-20">
+      <div className="flex h-screen w-screen overflow-hidden pt-20">
         <CreatorSidebar />
-        <div className="w-full flex-1">{children}</div>
+
+        <main className="flex-1 overflow-hidden">{children}</main>
       </div>
     </>
   )
 }
+
 export default CreatorLayout

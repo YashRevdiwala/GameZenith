@@ -22,11 +22,16 @@ import {
 } from "@/components/ui/tooltip"
 
 interface FollowingProps {
-  data: (Follow & { following: Users })[]
+  data: (Follow & {
+    following: Users & {
+      stream: {
+        isLive: boolean
+      } | null
+    }
+  })[]
 }
 
 const Following = ({ data }: FollowingProps) => {
-  const isLive = false
   const { open } = useSidebar()
 
   if (!data.length) return
@@ -40,7 +45,7 @@ const Following = ({ data }: FollowingProps) => {
         <SidebarGroupContent>
           <SidebarMenu>
             {data.map((user, i: number) => (
-              <SidebarMenuItem className={cn(!open && "w-full")} key={i}>
+              <SidebarMenuItem className={cn(!open && "my-1 w-full")} key={i}>
                 <Tooltip delayDuration={200}>
                   <TooltipTrigger className="w-full">
                     <SidebarMenuButton asChild>
@@ -50,7 +55,7 @@ const Following = ({ data }: FollowingProps) => {
                       >
                         <Image
                           className={cn(
-                            isLive &&
+                            user.following.stream?.isLive &&
                               "ring-opacity-50 ring-2 ring-rose-500 ring-offset-2 ring-offset-[#25272f]",
                             "w-5 rounded-full"
                           )}
@@ -62,32 +67,21 @@ const Following = ({ data }: FollowingProps) => {
 
                         <span>{user.following.username}</span>
 
-                        {isLive && (
-                          <Badge
-                            className={cn(
-                              open
-                                ? ""
-                                : "absolute right-0 -translate-x-1/2 transform md:right-full md:-bottom-3 md:left-1/2"
-                            )}
-                            variant="destructive"
-                          >
-                            LIVE
-                          </Badge>
+                        {user.following.stream?.isLive && open && (
+                          <Badge variant="destructive">LIVE</Badge>
                         )}
                       </Link>
                     </SidebarMenuButton>
                   </TooltipTrigger>
-                  <TooltipContent
-                    side="right"
-                    className={cn(
-                      "hidden md:block",
-                      open
-                        ? "hidden"
-                        : "text-muted w-fit rounded-lg px-5 text-lg font-semibold shadow-lg"
-                    )}
-                  >
-                    {user.following.username}
-                  </TooltipContent>
+
+                  {!open && (
+                    <TooltipContent
+                      side="right"
+                      className="text-muted hidden w-fit rounded-lg px-5 text-lg font-semibold shadow-lg md:block"
+                    >
+                      {user.following.username}
+                    </TooltipContent>
+                  )}
                 </Tooltip>
               </SidebarMenuItem>
             ))}

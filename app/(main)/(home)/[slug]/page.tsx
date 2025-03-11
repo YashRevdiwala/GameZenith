@@ -1,10 +1,11 @@
 import { notFound } from "next/navigation"
 
-import { Actions } from "./_components/actions"
+// import { Actions } from "./_components/actions"
 import { isFollowingUser } from "@/lib/follow-service"
 import { getRecommended } from "@/lib/recommended-service"
 import { getUserByUsername } from "@/lib/user-service"
 import { isBlockedByUser } from "@/lib/block-service"
+import { StreamPlayer } from "@/app/_components/stream-player"
 
 export const generateStaticParams = async () => {
   const users = await getRecommended()
@@ -32,13 +33,22 @@ const UserPage = async ({ params }: UserPageProps) => {
 
   // if (isBlocked) notFound()
 
+  if (!user || !user.stream) {
+    throw new Error("Unauthorized")
+  }
+
   return (
-    <div>
-      <h1>Username: {user.username}</h1>
+    <div className="h-full w-screen">
+      <StreamPlayer
+        user={user}
+        stream={user.stream}
+        isFollowing={isFollowing}
+      />
+      {/* <h1>Username: {user.username}</h1>
       <p>UserId: {user.id}</p>
       <p>Is following: {isFollowing ? "Yes" : "No"}</p>
       <p>Is blocked: {isBlocked ? "Yes" : "No"}</p>
-      <Actions userId={user.id} isFollowing={isFollowing} />
+      <Actions userId={user.id} isFollowing={isFollowing} /> */}
     </div>
   )
 }
