@@ -21,3 +21,11 @@ export const getUserById = async (id: string) => {
     },
   })
 }
+
+export const getAllUsernames = async () => {
+  return await db.users.findMany({
+    select: {
+      username: true,
+    },
+  })
+}
