@@ -1,40 +1,31 @@
-import React from "react"
-
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarTrigger,
-} from "@/components/ui/sidebar"
 import { getFollowedUsers } from "@/lib/follow-service"
 import { getRecommended } from "@/lib/recommended-service"
-import Following from "./following"
-import RecommendedUsers from "./recommended-users"
-import { UsersSkeleton } from "./users-skeleton"
+import { Following, FollowingSkeleton } from "./following"
+import { Recommended, RecommendedSkeleton } from "./recommended"
+import { Wrapper } from "./wrapper"
+import { Toggle, ToggleSkeleton } from "./toggle"
 
-const AppSidebar = async () => {
+export const AppSidebar = async () => {
   const recommended = await getRecommended()
-  const follows = await getFollowedUsers()
+  const following = await getFollowedUsers()
 
   return (
-    <Sidebar collapsible="icon" className="border-r border-[#252730]">
-      <SidebarContent className="text-muted bg-[#252730] font-semibold md:py-20">
-        <SidebarGroup>
-          <SidebarMenuItem className="flex items-end justify-end">
-            <SidebarMenuButton className="w-fit" asChild>
-              <SidebarTrigger className="hidden cursor-pointer md:block" />
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarGroup>
-
-        <React.Suspense fallback={<UsersSkeleton />}>
-          <Following data={follows} />
-          <RecommendedUsers users={recommended} />
-        </React.Suspense>
-      </SidebarContent>
-    </Sidebar>
+    <Wrapper>
+      <Toggle />
+      <div className="space-y-4 pt-4 lg:pt-0">
+        <Following data={following} />
+        <Recommended users={recommended} />
+      </div>
+    </Wrapper>
   )
 }
-export default AppSidebar
+
+export function SidebarSkeleton() {
+  return (
+    <aside className="bg-background border-[#2D2E35 z-50] fixed left-0 flex h-full w-[70px] flex-col border-r lg:w-60">
+      <ToggleSkeleton />
+      <FollowingSkeleton />
+      <RecommendedSkeleton />
+    </aside>
+  )
+}

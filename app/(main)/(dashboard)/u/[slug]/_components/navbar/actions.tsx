@@ -10,7 +10,7 @@ const Actions = async () => {
       <Button
         size="sm"
         variant="ghost"
-        className="text-muted-foreground"
+        className="text-muted-foreground hover:bg-primary hover:text-[#252731]"
         asChild
       >
         <Link href="/">

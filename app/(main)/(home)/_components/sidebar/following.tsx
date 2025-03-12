@@ -1,25 +1,8 @@
 "use client"
-import Link from "next/link"
-import Image from "next/image"
 import { Follow, Users } from "@prisma/client"
 
-import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
-import {
-  useSidebar,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarGroupContent,
-} from "@/components/ui/sidebar"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+import { UserItem, UserItemSkeleton } from "./user-item"
+import { useSidebar } from "@/store/use-sidebar"
 
 interface FollowingProps {
   data: (Follow & {
@@ -31,64 +14,38 @@ interface FollowingProps {
   })[]
 }
 
-const Following = ({ data }: FollowingProps) => {
-  const { open } = useSidebar()
+export const Following = ({ data }: FollowingProps) => {
+  const { collapsed } = useSidebar((state) => state)
 
-  if (!data.length) return
+  if (!data.length) return null
 
   return (
-    <TooltipProvider>
-      <SidebarGroup>
-        <SidebarGroupLabel className="text-muted-foreground font-bold">
-          Following
-        </SidebarGroupLabel>
-        <SidebarGroupContent>
-          <SidebarMenu>
-            {data.map((user, i: number) => (
-              <SidebarMenuItem className={cn(!open && "my-1 w-full")} key={i}>
-                <Tooltip delayDuration={200}>
-                  <TooltipTrigger className="w-full">
-                    <SidebarMenuButton asChild>
-                      <Link
-                        href={`/${user.following.username}`}
-                        className="flex items-center space-x-2"
-                      >
-                        <Image
-                          className={cn(
-                            user.following.stream?.isLive &&
-                              "ring-opacity-50 ring-2 ring-rose-500 ring-offset-2 ring-offset-[#25272f]",
-                            "w-5 rounded-full"
-                          )}
-                          src={user.following.imageUrl}
-                          alt={user.following.username}
-                          width={1000}
-                          height={1000}
-                        />
-
-                        <span>{user.following.username}</span>
-
-                        {user.following.stream?.isLive && open && (
-                          <Badge variant="destructive">LIVE</Badge>
-                        )}
-                      </Link>
-                    </SidebarMenuButton>
-                  </TooltipTrigger>
-
-                  {!open && (
-                    <TooltipContent
-                      side="right"
-                      className="text-muted hidden w-fit rounded-lg px-5 text-lg font-semibold shadow-lg md:block"
-                    >
-                      {user.following.username}
-                    </TooltipContent>
-                  )}
-                </Tooltip>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarGroupContent>
-      </SidebarGroup>
-    </TooltipProvider>
+    <div>
+      {!collapsed && (
+        <div className="mb-4 pl-6">
+          <p className="text-muted-foreground text-sm">Following</p>
+        </div>
+      )}
+      <ul className="space-y-2 px-2">
+        {data.map((follow) => (
+          <UserItem
+            key={follow.following.id}
+            username={follow.following.username}
+            imageUrl={follow.following.imageUrl}
+            isLive={follow.following.stream?.isLive}
+          />
+        ))}
+      </ul>
+    </div>
   )
 }
-export default Following
+
+export function FollowingSkeleton() {
+  return (
+    <ul className="px-2 pt-2 lg:pt-0">
+      {[...Array(3)].map((_, i) => (
+        <UserItemSkeleton key={i} />
+      ))}
+    </ul>
+  )
+}

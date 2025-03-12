@@ -13,7 +13,10 @@ const Actions = async () => {
       <SignedOut>
         <div className="flex items-center">
           <SignInButton>
-            <Button variant="ghost" className="text-muted hover:text-primary">
+            <Button
+              variant="ghost"
+              className="text-muted-foreground hover:bg-primary hover:text-[#252731]"
+            >
               Login
             </Button>
           </SignInButton>
@@ -24,7 +27,7 @@ const Actions = async () => {
         <div className="flex items-center space-x-5">
           <Button
             variant="ghost"
-            className="text-muted-foreground hover:text-primary"
+            className="text-muted-foreground hover:bg-primary hover:text-[#252731]"
             asChild
           >
             <Link href={`/u/${user?.username}`}>

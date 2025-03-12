@@ -10,6 +10,7 @@ import {
 import { OfflineVideo } from "./offline-video"
 import { LoadingVideo } from "./loading-video"
 import { LiveVideo } from "./live-video"
+import { Skeleton } from "@/components/ui/skeleton"
 
 interface VideoProps {
   hostName: string
@@ -34,9 +35,13 @@ export const Video = ({ hostName, hostIdentity }: VideoProps) => {
     content = <LiveVideo participant={participant} />
   }
 
+  return <div className="group relative aspect-video border-b">{content}</div>
+}
+
+export function VideoSkeleton() {
   return (
-    <div className="relative h-full w-full overflow-hidden border-b pb-4">
-      {content}
+    <div className="border-background aspect-video border-x">
+      <Skeleton className="h-full w-full rounded-none" />
     </div>
   )
 }

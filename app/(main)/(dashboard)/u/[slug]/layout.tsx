@@ -2,7 +2,8 @@ import { redirect } from "next/navigation"
 
 import { getSelfByUsername } from "@/lib/auth-service"
 import CreatorNavbar from "./_components/navbar"
-import CreatorSidebar from "./_components/sidebar"
+import { CreatorSidebar } from "./_components/sidebar"
+import { Container } from "./_components/container"
 
 interface CreatorLayoutProps {
   params: {
@@ -12,7 +13,7 @@ interface CreatorLayoutProps {
 }
 
 const CreatorLayout = async ({ params, children }: CreatorLayoutProps) => {
-  const { slug } = params
+  const { slug } = await params
 
   const self = await getSelfByUsername(slug)
   if (!self) redirect("/")
@@ -20,10 +21,9 @@ const CreatorLayout = async ({ params, children }: CreatorLayoutProps) => {
   return (
     <>
       <CreatorNavbar />
-      <div className="flex h-screen w-screen overflow-hidden pt-20">
+      <div className="flex h-full pt-20">
         <CreatorSidebar />
-
-        <main className="flex-1 overflow-hidden">{children}</main>
+        <Container>{children}</Container>
       </div>
     </>
   )

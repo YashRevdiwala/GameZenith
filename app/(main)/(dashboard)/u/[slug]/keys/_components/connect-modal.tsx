@@ -53,7 +53,12 @@ export const ConnectModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost">Generate new Keys</Button>
+        <Button
+          variant="ghost"
+          className="text-muted-foreground hover:bg-primary hover:text-[#252731]"
+        >
+          Generate new Keys
+        </Button>
       </DialogTrigger>
 
       <DialogContent className="border-0 bg-[#252731]">
@@ -61,10 +66,10 @@ export const ConnectModal = () => {
           <DialogTitle>Generate new Keys</DialogTitle>
         </DialogHeader>
 
-        <Alert className="text-muted border-0 bg-[#3b3e4c]">
+        <Alert className="border-0 bg-[#3b3e4c]">
           <AlertTriangle className="h-4 w-4" />
           <AlertTitle>Warning!</AlertTitle>
-          <AlertDescription className="text-muted/50">
+          <AlertDescription>
             Generating new keys will invalidate the existing keys. Are you sure
             you want to continue?
           </AlertDescription>
@@ -75,11 +80,11 @@ export const ConnectModal = () => {
           disabled={isPending}
           onValueChange={(value) => setIngressType(value)}
         >
-          <SelectTrigger className="text-muted w-full border-0">
-            <SelectValue placeholder="Ingress Type" className="text-muted" />
+          <SelectTrigger className="border-muted-foreground w-full">
+            <SelectValue placeholder="Ingress Type" />
           </SelectTrigger>
 
-          <SelectContent className="cursor-pointer border-0 bg-[#252731] text-gray-500">
+          <SelectContent className="border-muted-foreground cursor-pointer bg-[#252731] text-gray-500">
             <SelectItem value={RTMP}>RTMP</SelectItem>
             <SelectItem value={WHIP}>WHIP</SelectItem>
           </SelectContent>
@@ -87,10 +92,20 @@ export const ConnectModal = () => {
 
         <div className="mt-4 flex justify-end space-x-2">
           <DialogClose ref={closeRef} asChild>
-            <Button variant="ghost">Cancel</Button>
+            <Button
+              variant="ghost"
+              className="text-muted-foreground hover:bg-primary hover:text-[#252731]"
+            >
+              Cancel
+            </Button>
           </DialogClose>
 
-          <Button variant="ghost" onClick={onSubmit} disabled={isPending}>
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:bg-primary hover:text-[#252731]"
+            onClick={onSubmit}
+            disabled={isPending}
+          >
             Generate
           </Button>
         </div>
