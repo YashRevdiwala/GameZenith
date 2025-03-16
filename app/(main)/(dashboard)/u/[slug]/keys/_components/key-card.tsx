@@ -25,8 +25,8 @@ export const KeyCard = ({ value }: KeyCardProps) => {
               value={value || ""}
               type={passwordVisible ? "text" : "password"}
               disabled
-              placeholder="Server Url"
-              className="bg-[#fff] text-[#252731]"
+              placeholder="Stream Key"
+              className="bg-gray-500/50 text-white"
             />
             <CopyButton value={value || ""} />
             <Button
