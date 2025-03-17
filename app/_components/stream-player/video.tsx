@@ -7,10 +7,10 @@ import {
   useTracks,
 } from "@livekit/components-react"
 
-import { OfflineVideo } from "./offline-video"
-import { LoadingVideo } from "./loading-video"
-import { LiveVideo } from "./live-video"
 import { Skeleton } from "@/components/ui/skeleton"
+import { LiveVideo } from "./live-video"
+import { LoadingVideo } from "./loading-video"
+import { OfflineVideo } from "./offline-video"
 
 interface VideoProps {
   hostName: string

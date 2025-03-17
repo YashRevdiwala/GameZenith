@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
+import { LocalParticipant, RemoteParticipant } from "livekit-client"
 import { useParticipants } from "@livekit/components-react"
 
 import { Input } from "@/components/ui/input"
@@ -20,7 +21,7 @@ export const ChatCommunity = ({
   isHidden,
 }: ChatCommunityProps) => {
   const [value, setValue] = useState("")
-  const debouncedValue = useDebounceValue<string>(value, 500)
+  const [debouncedValue] = useDebounceValue<string>(value, 500)
 
   const participants = useParticipants()
 
@@ -28,7 +29,28 @@ export const ChatCommunity = ({
     setValue(newValue)
   }
 
-  if (!isHidden) {
+  const filteredParticipants = useMemo(() => {
+    const deduped = participants.reduce(
+      (acc, participant) => {
+        const hostViewer = `host-${participant.identity}`
+
+        if (!acc.some((p) => p.identity === hostViewer)) {
+          acc.push(participant)
+        }
+
+        return acc
+      },
+      [] as (RemoteParticipant | LocalParticipant)[]
+    )
+
+    return deduped.filter((participant) => {
+      return participant.name
+        ?.toLowerCase()
+        .includes(debouncedValue.toLowerCase())
+    })
+  }, [participants, debouncedValue])
+
+  if (isHidden) {
     return (
       <div className="flex flex-1 items-center justify-center">
         <p className="text-muted-foreground text-sm">Community is disabled</p>
@@ -49,7 +71,7 @@ export const ChatCommunity = ({
           No resullts found
         </p>
 
-        {participants.map((participant) => (
+        {filteredParticipants.map((participant) => (
           <CommunityItem
             key={participant.identity}
             hostName={hostName}

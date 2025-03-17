@@ -8,9 +8,9 @@ import {
 } from "@livekit/components-react"
 
 import { ChatVariant, useChatSidebar } from "@/store/use-chat-sidebar"
-import { ChatHeader } from "./chat-header"
-import { ChatForm } from "./chat-form"
-import { ChatList } from "./chat-list"
+import { ChatHeader, ChatHeaderSkeleton } from "./chat-header"
+import { ChatForm, ChatFormSkeleton } from "./chat-form"
+import { ChatList, ChatListSkeleton } from "./chat-list"
 import { ChatCommunity } from "./chat-community"
 
 interface ChatProps {
@@ -65,7 +65,7 @@ export const Chat = ({
   }
 
   return (
-    <div className="bg-background flex h-[calc(100vh-80px)] flex-col border-b border-l pt-0">
+    <div className="flex h-[calc(100vh-80px)] flex-col border-b border-l bg-[#252731] pt-0">
       <ChatHeader />
 
       {variant === ChatVariant.CHAT && (
@@ -91,6 +91,16 @@ export const Chat = ({
           isHidden={isHidden}
         />
       )}
+    </div>
+  )
+}
+
+export const ChatSkeleton = () => {
+  return (
+    <div className="flex h-[calc(100vh-80px)] flex-col border-2 border-b border-l pt-0">
+      <ChatHeaderSkeleton />
+      <ChatListSkeleton />
+      <ChatFormSkeleton />
     </div>
   )
 }

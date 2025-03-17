@@ -9,6 +9,11 @@
   --font-mono: var(--font-geist-mono);
 }
 
+html, body, :root{
+  height: 100%;
+  @apply bg-neutral-900/80;
+}
+
 .chat-settings-container {
   opacity: 0;
   max-height: 0;
@@ -24,11 +29,6 @@
 .chat-settings-container.hide {
   opacity: 0;
   max-height: 0;
-}
-
-
-html, body, :root{
-  height: 100%;
 }
 
 .hidden-scrollbar {
@@ -154,12 +154,11 @@ html, body, :root{
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
-}
 
-@layer base {
   :root {
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;

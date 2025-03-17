@@ -29,7 +29,7 @@ export function NavItem({
       className={cn(
         "h-12 w-full",
         collapsed ? "justify-center" : "justify-start",
-        isActive && "bg-accent"
+        isActive && "bg-muted-foreground/10"
       )}
     >
       <Link href={href}>

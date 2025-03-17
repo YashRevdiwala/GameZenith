@@ -16,7 +16,7 @@ export function Wrapper({ children }: { children: React.ReactNode }) {
 
   if (!isClient)
     return (
-      <aside className="bg-background fixed left-0 z-50 flex h-full w-60 flex-col border-r border-[#2D2E35]">
+      <aside className="fixed left-0 z-50 flex h-full w-60 flex-col border-r border-[#2D2E35] bg-[#252731]">
         <ToggleSkeleton />
         <FollowingSkeleton />
         <RecommendedSkeleton />
@@ -26,7 +26,7 @@ export function Wrapper({ children }: { children: React.ReactNode }) {
   return (
     <aside
       className={cn(
-        "bg-background fixed left-0 z-50 flex h-full w-60 flex-col border-r border-[#2D2E35]",
+        "fixed left-0 z-50 flex h-full w-60 flex-col border-r border-[#2D2E35] bg-[#252731]",
         collapsed && "w-[70px]"
       )}
     >

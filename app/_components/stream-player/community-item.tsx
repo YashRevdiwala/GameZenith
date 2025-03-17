@@ -1,13 +1,13 @@
 "use client"
 
-import { toast } from "sonner"
 import { useTransition } from "react"
+import { toast } from "sonner"
 import { MinusCircle } from "lucide-react"
 
-import { Hint } from "../hint"
 import { onBlock } from "@/actions/block"
-import { cn, stringToColor } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import { cn, stringToColor } from "@/lib/utils"
+import { Hint } from "../hint"
 
 interface CommunityItemProps {
   hostName: string
